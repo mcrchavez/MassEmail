@@ -1,5 +1,4 @@
-#fucking around and shit
-
+#Use for mass automated emailing with login
 import email , smtplib, ssl
 from email import encoders
 from email.mime.base import MIMEBase
@@ -128,23 +127,3 @@ class Send_mail:
                 self.sender.set_attribute(False)
             except smtplib.SMTPRecipientsRefused:
                 print("recipient address invalid")
-                
-
-       
-            
-
-
-
-
-
-
-
-
-reciep_emails = ["maya.ktu420@gmail.com", '']
-
-my_email = Email('testmc777', passw='Poop6969!')
-
-new_email = Send_mail(my_email, reciep_emails, "You Free Later? ;)", 'https://play.typeracer.com?rt=1vf2teqqhl')
-
-new_email.send_email()
-
