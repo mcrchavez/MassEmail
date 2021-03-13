@@ -1,3 +1,3 @@
 # BasicAutomation
-Basic Mass emailing script using python 
+Framework for automated emails with attachments
 
