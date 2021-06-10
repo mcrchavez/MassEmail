@@ -52,9 +52,15 @@ class Email:
         self.attrib = is_valid
 
 
-
 class Send_mail:
-    def __init__(self, sender, receivers = [], subject='', body_txt='', images=None, smtp_server=('smtp.gmail.com', 587)):
+    def __init__(self, sender, receivers = [], subject='', body_txt='', images=None, smtp_server=('smtp.gmail.com', 587)): 
+        """Void Type
+
+        sender is an Email object
+        recievers is a dictionary of Email objects
+        subject will become subject line of emails to be sent via MIME object
+        images 
+        """
         self.sender = sender
         self.receivers = receivers
         self.subject = subject
@@ -109,12 +115,15 @@ class Send_mail:
                 email["To"] = item
                 email["Subject"] = self.subject
                 password = self.sender.passw
+                #attaches text to email object with plaintext type
                 email.attach(MIMEText(self.body_text, "plain"))
                 #start the smtp session
                 #connect to the gmail smtp server using the tcp 587 port 
                 #start a tls session 
                 session = smtplib.SMTP(self.smtp_server[0], self.smtp_server[1])
                 session.starttls()
+
+                #login to session via smtp server with sender address and password
                 session.login(self.sender.get_address(), password) 
                 self.sender.set_attribute(True)
                 text = email.as_string()
@@ -123,7 +132,9 @@ class Send_mail:
                 session.quit()
                 print('Mail Sent From: ' + self.sender.get_address() + ' To: ' + item)
             except smtplib.SMTPAuthenticationError:
+                #catch authentication error if email login is incorrect
                 print("sender email username or password invalid")
                 self.sender.set_attribute(False)
             except smtplib.SMTPRecipientsRefused:
+                #catch error if recipient Email object refused connection
                 print("recipient address invalid")
