@@ -69,8 +69,10 @@ class Send_mail:
         self.smtp_server = smtp_server
 
     def characteristics(self):
+        #dict of object attributes
         return_dict = dict()
         return_dict['Sender:'] = str(self.sender).strip('-')
+        #reciever list
         rec_ls = []
         for item in self.receivers:
             if type(item) == str:
