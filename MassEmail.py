@@ -7,6 +7,7 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.audio import MIMEAudio
 
+import sys
 import argparse
 from typing import SupportsRound
 
@@ -147,20 +148,23 @@ class Send_mail:
 arg_parser = argparse.ArgumentParser(description="Python framework for automated email phishing")
 
 # uses "store" action which just attaches stored value to -d in argparse
-source_sub_command = arg_parser.add_subparsers(description="Set source email address and info")
-target_sub_command = arg_parser.add_subparsers(description="Set target email addresses")
+define_sub_commands = arg_parser.add_subparsers(description="Set source email info and target email addresses")
 
-source_parser = source_sub_command.add_parser("-S", help="Set email info")
-source_parser.add_argument(["-d", "--address"], help="Set email domain ex. email@gmail.com", required=True)
-source_parser.add_argument(["-p", "--password"], help="Set password for source email login", required=True)
+source_parser = define_sub_commands.add_parser("-S", help="Set email info")
+source_parser.add_argument("-d", "--address", help="Set email domain ex. email@gmail.com")
+#source_parser.add_argument(["-p", "--password"], help="Set password for source email login", required=True)
 
-target_parser = target_sub_command.add_parser("-T", help="Set target addresses via file or through cmdline")
-target_parser.add_argument(["-t", "--target"],nargs="*", help="Enter target email addresses ex. email@gmail.com email2@gmail.com")
-target_parser.add_argument(["-tf", "--file"], nargs="?", help="Provide csv text file for target email addresses")
+target_parser = define_sub_commands.add_parser("-T", help="Set target addresses via file or through cmdline")
+target_parser.add_argument("-t", "--target",nargs="*", help="Enter target email addresses ex. email@gmail.com email2@gmail.com")
+#target_parser.add_argument(["-tf", "--file"], nargs="?", help="Provide csv text file for target email addresses")
 
 
 def main():
-    printf 
+    try:
+        #skip the first arg which is MassEmail.py in cmdline
+        args = arg_parser.parse_args((sys.argv[1:]))
+    except argparse.ArgumentError as e:
+        print("Error")
     
 
 
