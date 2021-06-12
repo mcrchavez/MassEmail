@@ -145,18 +145,23 @@ class Send_mail:
                 #catch error if recipient Email object refused connection
                 print("recipient address invalid")
 
-arg_parser = argparse.ArgumentParser(description="Python framework for automated email phishing")
+arg_parser = argparse.ArgumentParser(description="Python framework for automated email phishing", prefix_chars='-', fromfile_prefix_chars='@')
+#metavar provides for different names for each arg valuein help messages
+arg_parser.add_argument("-S", "--source", nargs=2,help="Set source email info for smtp server login ex. email@domain.com password", required=True, metavar=("<SMTPEmail>", "<SMTPPassword>"))
+arg_parser.add_argument("-T", "--target", nargs="*", help="Set target addresses via file or through cmdline ex. email@gmail.com email2@gmail.com or @csv.txt", required=True, metavar="target_email")
 
+""""attempt for subcommand parsing, could seperate for further functionality
 # uses "store" action which just attaches stored value to -d in argparse
-define_sub_commands = arg_parser.add_subparsers(description="Set source email info and target email addresses")
+define_sub_commands = arg_parser.add_subparsers(description="Set source email info and target email addresses",help="Flags for email info setting")
 
-source_parser = define_sub_commands.add_parser("-S", help="Set email info")
-source_parser.add_argument("-d", "--address", help="Set email domain ex. email@gmail.com")
+source_parser = define_sub_commands.add_parser("S", help="Set email info")
+source_parser.add_argument("-d", "--address", help="Set email domain ex. email@gmail.com", )
 #source_parser.add_argument(["-p", "--password"], help="Set password for source email login", required=True)
 
-target_parser = define_sub_commands.add_parser("-T", help="Set target addresses via file or through cmdline")
+target_parser = define_sub_commands.add_parser("T", help="Set target addresses via file or through cmdline")
 target_parser.add_argument("-t", "--target",nargs="*", help="Enter target email addresses ex. email@gmail.com email2@gmail.com")
 #target_parser.add_argument(["-tf", "--file"], nargs="?", help="Provide csv text file for target email addresses")
+"""
 
 
 def main():
